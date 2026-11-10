@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "snmpcheck"
+version = "1.9.1"
+description = "SNMP device inventory CLI"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "GPL-3.0-or-later"
+dynamic = ["dependencies"]
+
+[project.scripts]
+snmpcheck = "snmpcheck:main"
+
+[tool.setuptools]
+py-modules = ["snmpcheck"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}

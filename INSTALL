@@ -1,0 +1,11 @@
+Requires Python 3.11 or later. With pipx, run from this directory:
+
+    pipx install .
+    snmpcheck --help
+
+To run directly from the source in a virtual environment:
+
+    python3 -m venv .venv
+    . .venv/bin/activate
+    python -m pip install -r requirements.txt
+    python snmpcheck.py --help
