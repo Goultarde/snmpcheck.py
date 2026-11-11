@@ -47,6 +47,27 @@ If a table stops advancing, snmpcheck warns, keeps the rows already read, and
 continues the report. A request timeout exits with status 1. Invalid CLI
 arguments exit with status 2.
 
+## Docker integration lab
+
+From the project directory, run:
+
+```sh
+docker compose -f lab/compose.yaml up --build --attach tests --exit-code-from tests
+docker compose -f lab/compose.yaml down
+```
+
+The lab exercises the installed CLI over UDP on a private Docker network.
+Net-SNMP verifies the Linux inventory with real TCP and UDP listeners, a known
+process, and a 16 MiB mount. It also checks read-only and read-write access.
+A deterministic agent covers every report section in SNMPv1 and v2c, including
+Windows, IIS, and LaserJet.
+
+The tests cover all CLI options, defaults, invalid arguments, and interruption
+with Ctrl+C. The SNMP cases cover sparse tables, missing OIDs, oversized GET
+responses, partial reports, unrecoverable errors, inconsistent response
+bindings, timeouts, and retries after packet loss. The lab publishes no host
+ports.
+
 ## License
 
 Original snmpcheck copyright © 2005–2015 Matteo Cantoni.

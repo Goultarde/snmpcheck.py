@@ -1,0 +1,28 @@
+name: snmpcheck-lab
+services:
+  net-snmp:
+    image: snmpcheck-lab:test
+    init: true
+    command: ["python", "/app/lab/linux_agent.py"]
+    environment:
+      MIBS: ""
+    tmpfs:
+      - /lab-storage:size=16m
+    networks: [lab]
+  fixture:
+    image: snmpcheck-lab:test
+    init: true
+    command: ["python", "/app/lab/fixture.py"]
+    networks: [lab]
+  tests:
+    image: snmpcheck-lab:test
+    build:
+      context: ..
+      dockerfile: lab/Dockerfile
+    depends_on: [net-snmp, fixture]
+    command: ["sh", "-ec", "python -m unittest -v && python -m unittest discover -s lab -p 'integration.py' -v"]
+    networks: [lab]
+
+networks:
+  lab:
+    internal: true
